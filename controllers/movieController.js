@@ -1,9 +1,29 @@
-export const getAllMovies = (req, res) => {
-  res.send("get all movies");
+import Movie from "../models/movieModel.js";
+
+export const getAllMovies = async (req, res) => {
+  try {
+    const movies = await Movie.find();
+    res.json(movies);
+  } catch (error) {
+    return res.status(500).json({ message: error.message });
+  }
 };
 
-export const addNewMovie = (req, res) => {
-  res.send("Post all movies");
+export const addNewMovie = async (req, res) => {
+  // Validate
+  const newMovie = new Movie({
+    question: req.body.question,
+    clues: req.body.clues,
+    hint: req.body.hint,
+    final_answer: req.body.final_answer,
+  });
+
+  try {
+    const movie = await newMovie.save();
+    return res.status(201).json(movie);
+  } catch (error) {
+    return res.status(400).json({ message: error.message });
+  }
 };
 
 export const updateMovieById = (req, res) => {
