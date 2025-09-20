@@ -9,6 +9,16 @@ export const getAllMovies = async (req, res) => {
   }
 };
 
+export const getMovieById = async (req, res) => {
+    const id = req.params.id;
+  try {
+    const movies = await Movie.findById(id);
+    res.json(movies);
+  } catch (error) {
+    return res.status(500).json({ message: error.message });
+  }
+};
+
 export const addNewMovie = async (req, res) => {
   // Validate
   const newMovie = new Movie({
