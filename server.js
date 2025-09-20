@@ -10,6 +10,14 @@ const app = express();
 
 const PORT = process.env.PORT || PORT;
 
+// Connect to DB
+connectDb();
+
+// Middleware to parse JSON bodies
+app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
+app.use(express.static("public"));
+
 // Home route
 app.get("/", (req, res) => {
   res.send("hello from server");
