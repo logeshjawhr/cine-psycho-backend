@@ -1,4 +1,4 @@
-import Movie from "../models/movieModel.js";
+import Movie from "../models/Movie.js";
 
 export const getAllMovies = async (req, res) => {
   try {
