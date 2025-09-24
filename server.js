@@ -2,6 +2,7 @@ import express from "express";
 import dotenv from "dotenv";
 
 import movieRoutes from "./routes/movieRoutes.js";
+import authRoutes from "./routes/authRoutes.js";
 import { connectDb } from "./config/db.js";
 
 dotenv.config();
@@ -23,6 +24,7 @@ app.get("/", (req, res) => {
   res.send("hello from server");
 });
 
+app.use("/api/auth", authRoutes);
 app.use("/", movieRoutes);
 
 app.listen(PORT, () => {
