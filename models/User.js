@@ -1,31 +1,46 @@
-import {model, Schema } from "mongoose";
+import { model, Schema } from "mongoose";
 
-const userSchema = new Schema({
-	username: {
-		type: String,
-		required: true,
-		trim: true,
-		unique: true,
-	},
-	email: {
-		type: String,
-		required: true,
-		trim: true,
-		unique: true,
-	},
-	password: {
-		type: String,
-		required: true,
-	},
-	currentLevel: {
-		type: Number,
-		default: 1
-	},
-	totalScore: {
-		type: Number,
-		default: 0
-	}
+const progressSchema = new Schema({
+  level: {
+    type: Number,
+    default: 1,
+  },
+  score: {
+    type: Number,
+    default: 0,
+  },
+  stars: {
+    type: Number,
+    default: 0,
+  },
+  completedAt: {
+    type: Date,
+    default: null,
+  },
 });
+
+const userSchema = new Schema(
+  {
+    username: {
+      type: String,
+      required: true,
+      trim: true,
+      unique: true,
+    },
+    email: {
+      type: String,
+      required: true,
+      trim: true,
+      unique: true,
+    },
+    password: {
+      type: String,
+      required: true,
+    },
+    progress: { type: progressSchema, default: () => ({}) },
+  },
+  { timestamps: true }
+);
 
 const User = model("User", userSchema);
 

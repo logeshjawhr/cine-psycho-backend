@@ -6,13 +6,14 @@ import logger from "./utils/logger.js";
 
 import movieRoutes from "./routes/movieRoutes.js";
 import authRoutes from "./routes/authRoutes.js";
+import progressRoutes from "./routes/progressRoutes.js";
 import { connectDb } from "./config/db.js";
 
 dotenv.config();
 
 const app = express();
 
-const PORT = process.env.PORT || PORT;
+const PORT = process.env.PORT || 5000;
 
 // Connect to DB
 connectDb();
@@ -35,9 +36,14 @@ app.get("/", (req, res) => {
   res.send("hello from server");
 });
 
-// Routes 
+// Auth Routes 
 app.use("/api/auth", authRoutes);
-app.use("/", movieRoutes);
+
+// Movie Routes
+app.use("/api", movieRoutes);
+
+// Progress Routes
+app.use("/api/progress", progressRoutes);
 
 // Start the server
 app.listen(PORT, () => {

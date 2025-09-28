@@ -96,3 +96,63 @@ export const changePassword = async (req, res) => {
     res.status(500).json({ message: error.message });
   }
 }
+
+// Get current user profile
+export const getProfile = async (req, res) => {
+  try {
+    const user = req.user;
+    if (!user) {
+      return res.status(404).json({ message: "User not found" });
+    } 
+    res.json({
+      status: "Success",
+      data: {
+        id: user._id,
+        username: user.username,
+        email: user.email,
+        progress: user.progress
+      }
+    });
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  } 
+};
+
+// Update user profile
+export const updateProfile = async (req, res) => {
+  const { username, email } = req.body;
+  const userId = req.user._id;
+  try {
+    const user = await User.findById(userId);
+    if (!user) {
+      return res.status(404).json({ message: "User not found" });
+    }
+    user.username = username || user.username;
+    user.email = email || user.email;
+    await user.save();  
+    res.json({
+      status: "Success",
+      message: "Profile updated successfully",
+      data: {
+        id: user._id,
+        username: user.username,
+        email: user.email
+      }
+    });
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
+};
+
+// Get all users (admin only)
+export const getAllUsers = async (req, res) => {
+  try {
+    const users = await User.find().select("-password");
+    res.json({
+      status: "Success",
+      data: users
+    });
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
+};

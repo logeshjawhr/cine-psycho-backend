@@ -4,19 +4,26 @@ import { model, Schema } from "mongoose";
 const movieSchema = new Schema({
   question: {
     type: String,
-    required: true
+    required: true,
   },
   clues: {
     type: [String],
-    required: true
+    required: true,
+    validate: [(arr) => arr.length <= 4, "{PATH} exceeds the limit of 4 clues"],
+    default: [],
   },
   hint: {
     type: String,
-    required: true
+    required: true,
   },
   final_answer: {
     type: String,
-    required: true
+    required: true,
+  },
+  difficulty: {
+    type: String,
+    enum: ["easy", "medium", "hard"],
+    required: true,
   },
 });
 

@@ -10,7 +10,7 @@ export const getAllMovies = async (req, res) => {
 };
 
 export const getMovieById = async (req, res) => {
-    const id = req.params.id;
+  const id = req.params.id;
   try {
     const movies = await Movie.findById(id);
     res.json(movies);
@@ -26,6 +26,7 @@ export const addNewMovie = async (req, res) => {
     clues: req.body.clues,
     hint: req.body.hint,
     final_answer: req.body.final_answer,
+    difficulty: req.body.difficulty,
   });
 
   try {
@@ -37,9 +38,24 @@ export const addNewMovie = async (req, res) => {
 };
 
 export const updateMovieById = (req, res) => {
+  // will implement later
   res.send("Add movies");
 };
 
 export const deleteMoviesById = (req, res) => {
-  res.send("Delete movies");
+  const id = req.params.id;
+  try {
+    Movie.findByIdAndDelete(id)
+      .then((movie) => {
+        if (!movie) {
+          return res.status(404).json({ message: "Movie not found" });
+        }
+        res.json({ message: "Movie deleted successfully" });
+      })
+      .catch((error) => {
+        res.status(500).json({ message: error.message });
+      });
+  } catch (error) {
+    return res.status(500).json({ message: error.message });
+  }
 };
