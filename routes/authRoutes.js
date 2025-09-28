@@ -7,7 +7,7 @@ const router = express.Router();
 
 router.post("/login", loginUser);
 router.post("/register", registerUser);
-router.post("/password/change",authMiddleware, changePassword);
+router.post("/password/change", authMiddleware, changePassword);
 
 router.get("/current/profile", authMiddleware, getProfile);
 router.post("/update/current/profile", authMiddleware, updateProfile);

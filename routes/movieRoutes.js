@@ -1,19 +1,21 @@
 import express from "express";
+
 import {
   addNewMovie,
-  deleteMoviesById,
+  // deleteMoviesById,
   getAllMovies,
-  getMovieById,
-  updateMovieById,
+  // getMovieById,
+  // updateMovieById,
 } from "../controllers/movieController.js";
 import { authMiddleware } from "../middlewares/authMiddleware.js";
 
 const router = express.Router();
 
 router.get("/movies", authMiddleware, getAllMovies);
-router.get("/movies/:id", authMiddleware, getMovieById);
 router.post("/movies", authMiddleware, addNewMovie);
-router.put("/movies/:id", authMiddleware, updateMovieById);
-router.delete("/movies/:id", authMiddleware, deleteMoviesById);
+
+// router.get("/movies/:id", authMiddleware, getMovieById);
+// router.put("/movies/:id", authMiddleware, updateMovieById);
+// router.delete("/movies/:id", authMiddleware, deleteMoviesById);
 
 export default router;
